@@ -298,7 +298,7 @@ void wxPlotCtrlArea::OnPaint( wxPaintEvent &WXUNUSED(event) )
     if (m_bitmap.Ok())
         dc.DrawBitmap(m_bitmap, 0, 0, false);
 
-    if (m_owner->GetCrossHairCursor() && m_owner->GetPlotAreaRect().Inside(m_mousePt))
+    if (m_owner->GetCrossHairCursor() && m_owner->GetPlotAreaRect().Contains(m_mousePt))
         m_owner->DrawCrosshairCursor( &dc, m_mousePt );
 
     m_owner->DrawMouseMarker(&dc, m_owner->GetAreaMouseMarker(), m_mouseRect);
@@ -705,9 +705,9 @@ void wxPlotCtrl::OnMouse( wxMouseEvent &event )
     wxSize size(GetClientSize());
     wxPoint mousePt(event.GetPosition());
 
-    if ((m_show_title  && m_titleRect.Inside(mousePt)) ||
-        (m_show_xlabel && m_xLabelRect.Inside(mousePt)) ||
-        (m_show_ylabel && m_yLabelRect.Inside(mousePt)))
+    if ((m_show_title  && m_titleRect.Contains(mousePt)) ||
+        (m_show_xlabel && m_xLabelRect.Contains(mousePt)) ||
+        (m_show_ylabel && m_yLabelRect.Contains(mousePt)))
     {
         SetPlotWinMouseCursor(wxCURSOR_IBEAM);
     }
@@ -716,11 +716,11 @@ void wxPlotCtrl::OnMouse( wxMouseEvent &event )
 
     if (event.ButtonDClick(1) && !IsTextCtrlShown())
     {
-        if (m_show_title && m_titleRect.Inside(mousePt))
+        if (m_show_title && m_titleRect.Contains(mousePt))
             ShowTextCtrl(wxPLOTCTRL_EDIT_TITLE, true);
-        else if (m_show_xlabel && m_xLabelRect.Inside(mousePt))
+        else if (m_show_xlabel && m_xLabelRect.Contains(mousePt))
             ShowTextCtrl(wxPLOTCTRL_EDIT_XAXIS, true);
-        else if (m_show_ylabel && m_yLabelRect.Inside(mousePt))
+        else if (m_show_ylabel && m_yLabelRect.Contains(mousePt))
             ShowTextCtrl(wxPLOTCTRL_EDIT_YAXIS, true);
     }
 }
@@ -3333,7 +3333,7 @@ void wxPlotCtrl::ProcessAreaEVT_MOUSE_EVENTS( wxMouseEvent &event )
         // Move the origin
         if (m_area_mouse_func == wxPLOTCTRL_MOUSE_PAN)
         {
-            if (!m_areaClientRect.Inside(event.GetPosition()))
+            if (!m_areaClientRect.Contains(event.GetPosition()))
             {
                 StartMouseTimer(ID_AREA_TIMER);
             }
@@ -3521,8 +3521,8 @@ void wxPlotCtrl::OnChar(wxKeyEvent &event)
         case WXK_RIGHT : SetOrigin(m_viewRect.GetLeft() + m_viewRect.m_width/10.0, m_viewRect.GetTop()); return;
         case WXK_UP    : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() + m_viewRect.m_height/10.0); return;
         case WXK_DOWN  : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() - m_viewRect.m_height/10.0); return;
-        case WXK_PRIOR : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() + m_viewRect.m_height/2.0); return;
-        case WXK_NEXT  : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() - m_viewRect.m_height/2.0); return;
+        case WXK_PAGEUP : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() + m_viewRect.m_height/2.0); return;
+        case WXK_PAGEDOWN : SetOrigin(m_viewRect.GetLeft(), m_viewRect.GetTop() - m_viewRect.m_height/2.0); return;
 
         // Center the plot on the cursor point, or 0,0
         case WXK_HOME :

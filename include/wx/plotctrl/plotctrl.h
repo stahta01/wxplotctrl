@@ -15,6 +15,8 @@
     #pragma interface "plotctrl.h"
 #endif
 
+#include "wx/window.h"
+#include <wx/scrolbar.h>
 #include "wx/bitmap.h"
 #include "wx/plotctrl/plotdefs.h"
 #include "wx/plotctrl/plotcurv.h"

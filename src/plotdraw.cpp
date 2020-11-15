@@ -36,6 +36,10 @@
 #include <float.h>
 #include <limits.h>
 
+#ifdef __WXMSW__
+#include "wx/msw/private.h"
+#endif
+
 // MSVC hogs global namespace with these min/max macros - remove them
 #ifdef max
     #undef max
