@@ -256,7 +256,7 @@ void wxPlotCtrlFrame::OnMenu(wxCommandEvent& event)
                                     wxT(""),
                                     wxT(""),
                                     wxT("All files (*)|*"),
-                                    wxOPEN | wxFILE_MUST_EXIST);
+                                    wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 			for (int i = 0; i < 50; i++) {
 				x[i] = 0.1*i;
 				y[i] = 0.1*sin(0.1*i)-0.5;
