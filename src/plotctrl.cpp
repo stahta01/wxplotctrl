@@ -2563,7 +2563,7 @@ void wxPlotCtrl::DrawMouseMarker( wxDC *dc, int type, const wxRect &rect )
     if ((rect.width == 0) || (rect.height == 0))
         return;
 
-    int logical_fn = dc->GetLogicalFunction();
+    wxRasterOperationMode logical_fn = dc->GetLogicalFunction();
     dc->SetLogicalFunction( wxINVERT );
     dc->SetBrush( *wxTRANSPARENT_BRUSH );
     dc->SetPen(*wxThePenList->FindOrCreatePen(*wxBLACK, 1, wxDOT));
@@ -2611,7 +2611,7 @@ void wxPlotCtrl::DrawCrosshairCursor( wxDC *dc, const wxPoint &pos )
     wxCHECK_RET(dc, wxT("invalid window"));
 
     dc->SetPen(*wxBLACK_PEN);
-    int logical_fn = dc->GetLogicalFunction();
+    wxRasterOperationMode logical_fn = dc->GetLogicalFunction();
     dc->SetLogicalFunction( wxINVERT );
 
     dc->CrossHair(pos.x, pos.y);
