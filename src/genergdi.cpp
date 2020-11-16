@@ -8,23 +8,24 @@
 // Licence:     wxWidgets license
 /////////////////////////////////////////////////////////////////////////////
 
-#include "precomp.h"
+#if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
+    #pragma implementation "genergdi.h"
+#endif
 
 // For compilers that support precompilation, includes "wx.h".
-#include <wx/wxprec.h>
+#include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
     #pragma hdrstop
 #endif
 
 #include "wx/things/genergdi.h"
-#include <wx/tokenzr.h>
-#include <wx/bitmap.h>
+#include "wx/tokenzr.h"
 
 const wxGenericColour wxNullGenericColour;
 const wxGenericPen    wxNullGenericPen;
 const wxGenericBrush  wxNullGenericBrush;
-#include <wx/arrimpl.cpp>
+#include "wx/arrimpl.cpp"
 WX_DEFINE_OBJARRAY(wxArrayGenericColour)
 WX_DEFINE_OBJARRAY(wxArrayGenericPen)
 WX_DEFINE_OBJARRAY(wxArrayGenericBrush)
@@ -566,7 +567,7 @@ class wxGenericBrushRefData : public wxObjectRefData
 {
 public:
     wxGenericBrushRefData(const wxGenericColour& c = wxNullGenericColour,
-                          int style = wxSOLID) : wxObjectRefData(),
+                          wxBrushStyle style = wxBRUSHSTYLE_SOLID) : wxObjectRefData(),
                           m_colour(c), m_style(style) {}
 
     wxGenericBrushRefData(const wxGenericBrushRefData& data) : wxObjectRefData(),
@@ -575,7 +576,7 @@ public:
     ~wxGenericBrushRefData() { }
 
     wxGenericColour m_colour;
-    int             m_style;
+    wxBrushStyle    m_style;
     wxBitmap        m_stipple;
 };
 
@@ -601,12 +602,12 @@ void wxGenericBrush::Create( const wxBrush &brush )
     m_refData = new wxGenericBrushRefData;
     Set(brush);
 }
-void wxGenericBrush::Create(const wxGenericColour &colour, int style)
+void wxGenericBrush::Create(const wxGenericColour &colour, wxBrushStyle style)
 {
     UnRef();
     m_refData = new wxGenericBrushRefData(colour, style);
 }
-void wxGenericBrush::Create(const wxColour &colour, int style)
+void wxGenericBrush::Create(const wxColour &colour, wxBrushStyle style)
 {
     Create(wxGenericColour(colour), style);
 }
@@ -615,7 +616,7 @@ void wxGenericBrush::Create( const wxBitmap &stipple )
     UnRef();
     wxCHECK_RET(stipple.Ok(), wxT("Invalid bitmap in wxGenericBrush::Create"));
 
-    int style = stipple.GetMask() ? wxSTIPPLE_MASK_OPAQUE : wxSTIPPLE;
+    wxBrushStyle style = stipple.GetMask() ? wxBRUSHSTYLE_STIPPLE_MASK_OPAQUE : wxBRUSHSTYLE_STIPPLE;
     m_refData = new wxGenericBrushRefData(wxNullGenericColour, style);
     M_GBRUSHDATA->m_stipple = stipple;
 }
@@ -651,7 +652,7 @@ void wxGenericBrush::SetColour( int red, int green, int blue, int alpha )
 {
     SetColour(wxGenericColour(red, green, blue, alpha));
 }
-void wxGenericBrush::SetStyle( int style )
+void wxGenericBrush::SetStyle( wxBrushStyle style )
 {
     wxCHECK_RET(Ok(), wxT("Invalid generic brush"));
     M_GBRUSHDATA->m_style = style;
@@ -660,7 +661,7 @@ void wxGenericBrush::SetStipple(const wxBitmap& stipple)
 {
     wxCHECK_RET(Ok(), wxT("Invalid generic brush"));
     M_GBRUSHDATA->m_stipple = stipple;
-    M_GBRUSHDATA->m_style = stipple.GetMask() ? wxSTIPPLE_MASK_OPAQUE : wxSTIPPLE;
+    M_GBRUSHDATA->m_style = stipple.GetMask() ? wxBRUSHSTYLE_STIPPLE_MASK_OPAQUE : wxBRUSHSTYLE_STIPPLE;
 
 }
 
@@ -683,9 +684,9 @@ wxColour wxGenericBrush::GetColour() const
     wxCHECK_MSG(Ok(), wxNullColour, wxT("Invalid generic brush"));
     return M_GBRUSHDATA->m_colour.GetColour();
 }
-int wxGenericBrush::GetStyle() const
+wxBrushStyle wxGenericBrush::GetStyle() const
 {
-    wxCHECK_MSG(Ok(), wxSOLID, wxT("Invalid generic brush"));
+    wxCHECK_MSG(Ok(), wxBRUSHSTYLE_SOLID, wxT("Invalid generic brush"));
     return M_GBRUSHDATA->m_style;
 }
 wxBitmap* wxGenericBrush::GetStipple() const
