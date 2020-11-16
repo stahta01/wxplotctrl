@@ -11,10 +11,6 @@
 #ifndef _WX_PLOTCURVE_H_
 #define _WX_PLOTCURVE_H_
 
-#if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-    #pragma interface "plotcurv.h"
-#endif
-
 #include "wx/clntdata.h"
 #include "wx/things/genergdi.h"
 #include "wx/plotctrl/plotdefs.h"

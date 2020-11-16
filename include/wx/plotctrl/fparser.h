@@ -18,14 +18,6 @@
 #ifndef ONCE_wxFPARSER_H_
 #define ONCE_wxFPARSER_H_
 
-#if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-    #pragma interface "fparser.h"
-#endif
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
 #include "wx/plotctrl/plotdefs.h"
 
 class WXDLLEXPORT wxString;

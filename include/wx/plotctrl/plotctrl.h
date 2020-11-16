@@ -11,10 +11,6 @@
 #ifndef _WX_PLOTCTRL_H_
 #define _WX_PLOTCTRL_H_
 
-#if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-    #pragma interface "plotctrl.h"
-#endif
-
 #include "wx/window.h"
 #include <wx/scrolbar.h>
 #include "wx/bitmap.h"
